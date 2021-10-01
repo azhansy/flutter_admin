@@ -5,6 +5,8 @@
 /// @version: 1.0
 /// @description: 存储工具类
 
+import 'dart:convert';
+
 import 'package:cry/model/response_body_api.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_admin/api/dict_api.dart';
@@ -97,6 +99,8 @@ class StoreUtil {
   static Future<bool?> loadSubsystem() async {
     ResponseBodyApi responseBodyApi = await SubsystemApi.listEnable();
     if (responseBodyApi.success!) {
+      print('loadSubsystem=${json.encode(responseBodyApi.data)}');
+
       StoreUtil.write(Constant.KEY_SUBSYSTEM_LIST, responseBodyApi.data);
       List<Subsystem> list = responseBodyApi.data == null ? [] : List.from(responseBodyApi.data).map((e) => Subsystem.fromMap(e)).toList();
       if (list.isNotEmpty) {
